@@ -11,6 +11,10 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { NewPostComponent } from './new-post/new-post.component';
+import { PostContainerComponent } from './post-container/post-container.component';
+
 
 const config = {
   apiKey: "AIzaSyACpCRhfpeXTiHVaHfi9os1HnTagNXtb8A",
@@ -25,16 +29,19 @@ const config = {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NewPostComponent,
+    PostContainerComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    AngularFireModule.initializeApp(config),
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
+    AngularFireDatabaseModule,
+    AngularFireModule.initializeApp(config),
     HttpClientModule
   ],
   providers: [],
