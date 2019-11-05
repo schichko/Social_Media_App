@@ -2,24 +2,25 @@
 <h1>Welcome to Social Media</h1>
 
 
-<div *ngIf="auth.user$ | async as user; else login">
-  <pre>
-    {{ user | json }}
-  </pre>
-  <div>
-    {{user.displayName}}
+<div *ngIf="auth.user$ | async as user; else login" class ="container">
+  <div class="jumbotron">
+    <pre>
+      {{ user | json }}
+    </pre>
+    <div>
+      {{user.displayName}}
+    </div>
+    
+    <hr>
+    <button class="button" (click)="auth.signOut()">Sign Out</button>
+
+
+    <button class = "button" (click)="post()" >New Post</button>
+
+    <div  *ngIf="displayPost==true">
+      <app-new-post username = {{user.displayName}} (notify)="handlePost($event)"></app-new-post>
+    </div>
   </div>
-  
-  <hr>
-  <button class="button" (click)="auth.signOut()">Sign Out</button>
-
-
-  <button class = "button" (click)="post()" >New Post</button>
-
-  <div  *ngIf="displayPost==true">
-    <app-new-post username = {{user.displayName}} (notify)="handlePost($event)"></app-new-post>
-  </div>
-
 
 </div>
 
