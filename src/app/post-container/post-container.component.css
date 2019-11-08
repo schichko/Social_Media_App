@@ -1,3 +1,81 @@
+@import url('https://fonts.googleapis.com/css?family=Cairo&display=swap');
+
 .postContainer{
     margin: 10px;
+    border-radius: 10px;
+    border:1px solid #B4B8AB;
+    background: linear-gradient(to bottom,
+        #2b3252 0%, 
+        #2b3252 20%, 
+        #ffffff 20%, 
+        #ffffff 100%
+    );
+}
+
+.marginForText{
+    margin: 2%;
+    color: #FAD744;
+
+}
+
+.title{
+    font-family: 'Cairo', sans-serif;
+    font-weight: bold;
+    background-color: #2b3252;
+}
+
+.post-body{
+    text-align: center;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 300;
+    margin: 5%;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    z-index: 1;
+    overflow: auto; 
+  }
+  
+  .popup {
+    margin: 10% auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    width: 80%;
+    position: relative;
+    transition: all 5s ease-in-out;
+  }
+  
+  .popup h2 {
+    margin-top: 0;
+    color: #333;
+    font-family: Tahoma, Arial, sans-serif;
+  }
+  .popup .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+  }
+  .popup .close:hover {
+    color: #06D85F;
+  }
+  .popup .content {
+    max-height: 30%;
+    overflow: auto;
+  }
+
+  .hiiden-f {
+    overflow: hidden;
 }
