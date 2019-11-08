@@ -1,21 +1,37 @@
-<div *ngFor="let post of totalPosts" class="postContainer">
-        <h1>Author: {{ post.poster }}</h1>
-        <h1>Title: {{ post.title}}</h1>
-        <h1>Body: {{ post.body}}</h1>   
-        <button (click)="blowUpPost(post)" >Open Post</button>
+
+<div *ngFor="let post of totalPosts">
+       
+        <div class="postContainer">
+
+                <h1 class="marginForText title">{{post.title}}</h1>
+                <h1 class="marginForText post-body">{{ post.body}}</h1>   
+                <h1 class="marginForText author">Author: {{ post.poster }}</h1>
+                <button (click)="blowUpPost(post)" class="marginForText">Open Post</button>
+
+        </div>
 </div>
 
 <div *ngIf="blownUP">
-        <h1>Author: {{ blownUP.poster }}</h1>
-        <h1>Title: {{ blownUP.title}}</h1>
-        <h1>Body: {{ blownUP.body}}</h1>   
-        <div *ngFor="let comment of blownUP.comments">
-                <h1>{{comment.poster}} Said</h1>
-                <h1>{{comment.commentBody}}</h1>
-                <h1>At {{comment.commentTime}}</h1>
+
+        <div class="overlay">
+
+                <div class="popup">
+
+                        <button (click)="closePost()" >Close Post</button>
+                        <h1>Author: {{ blownUP.poster }}</h1>
+                        <h1>Title: {{ blownUP.title}}</h1>
+                        <h1>Body: {{ blownUP.body}}</h1>  
+
+                                <div *ngFor="let comment of blownUP.comments">
+
+                                        <h1>{{comment.poster}} Said</h1>
+                                        <h1>{{comment.commentBody}}</h1>
+                                        <h1>At {{comment.commentTime}}</h1>
+                                </div>
+
+                        Post Comment : <input type="text" name="Body" id="commentBody"><br>
+                        <button class = "button" (click)="postComment()">Submit</button>
+                        
+                </div>
         </div>
-        Post Comment : <input type="text" name="Body" id="commentBody"><br>
-        <button class = "button" (click)="postComment()">Submit</button>
-        
-        <button (click)="closePost()" >Close Post</button>
 </div>

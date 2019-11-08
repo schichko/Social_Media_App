@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {AuthService} from './services/auth.service'
 import {AngularFireDatabase } from '@angular/fire/database'
 
+import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -12,10 +13,12 @@ import { switchMap } from 'rxjs/operators';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
+  
   constructor(public auth: AuthService) {}
   
-
+  ngOnInit(){
+  }
 
   displayPost= false;
   
@@ -27,6 +30,15 @@ export class AppComponent {
     this.displayPost = !this.displayPost;
   }
 
+  openPost(eventData: boolean) {
+    if(eventData == true){
+      disableBodyScroll(document.getElementById("HeyThere"));
+    }
+    else{
+      enableBodyScroll(document.getElementById("HeyThere"));
+    }
+  }
+ 
  
  
 }
