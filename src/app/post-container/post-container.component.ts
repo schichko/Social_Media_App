@@ -1,4 +1,3 @@
-
 import {
   Component, 
   OnInit, 
@@ -29,41 +28,50 @@ export class PostContainerComponent implements OnInit {
   username: string;
 
   totalPosts : Post[] = new Array();
-  blownUP : Post;
+  slectedPost : Post;
   
+  //Input: None
+  //Output: None
+  //Gets the posts from an async function, what this means is that it works in parallel so as soon as its done it will change our total posts to getPosts() return value
   ngOnInit() {
+
     this.getPosts().then(val => this.totalPosts = val);
-    
   }
 
+  //Input: None
+  //Output : Returns an Array of Type post that  we later assign to this.totalPostVals(Cant Assign this inside of an async) at least i never figured it out 
   async getPosts(){
-    var tempPost : Post[] = new Array();
+    var tempArrayOfPost : Post[] = new Array();
     const firestore = firebase.firestore();
     const snapshot = await firestore
       .collection("posts")
       .get()
     
-  
     snapshot.forEach(function(doc) {
           const data = { 
             postID : doc.id,
             poster: doc.data().poster,
             title: doc.data().title,
             body: doc.data().body,
-            //So we dont really need comments here so should find a way to remove this
-            comments : doc.data().comments
           };
-          tempPost.push(data);
+          tempArrayOfPost.push(data);
     });
-    return tempPost;
+
+    return tempArrayOfPost;
   }
 
-  blowUpPost(selectedPost : Post){
-    
-    this.getSinglePost(selectedPost.postID).then(val => this.blownUP = val);
+  //Input: A Selected Post
+  //Output: None
+  //Opens a user selected post and assigns it to the selected Post Value
+  //This Also Emits the value of true for postSeleced Showing that some post was selected
+  openPost(selectedPost : Post){    
+    this.getSinglePost(selectedPost.postID).then(val => this.slectedPost = val);
     this.notify.emit(true);
   }
 
+  //Input the ID of the post (The ID is a randomly generated value by firebase)
+  //Output: The Selected Post as a single post
+  //Similarly the get SinglePost function works almost the same as the get post function except it only gets one based on the value passed in as postID
   async getSinglePost(postID:string){
     var myPost : Post;
     const firestore = firebase.firestore();
@@ -72,9 +80,6 @@ export class PostContainerComponent implements OnInit {
       .collection("posts")
       .where(firebase.firestore.FieldPath.documentId(), "==", postID)
       .get()
-     
-
-      // console.log("Gotten");
       
       snapshot.forEach(function(doc) {
 
@@ -92,23 +97,26 @@ export class PostContainerComponent implements OnInit {
     return myPost;
   }
 
+  //Input: None
+  //Output: None
+  //We Reset the selected post to nothing and let the app component know that it can start scrolling again by emitting that a post is no longer selected
   closePost(){
-    this.blownUP = null; 
+    this.slectedPost = null; 
     this.notify.emit(false);
   }
 
+  //Input: None
+  //Output: Nonoe
+  //We Can send a comment to the selected posts database
   postComment(){
     
-
     var today = new Date();
     var dateTime =  today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate()+":"+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    console.log("Hello World");
     var Inputs = document.getElementsByTagName("input");
     var commentBody : string;
 
     var properFormat = true;
     
-
     for(var i =0; i<Inputs.length;i++){
       switch(Inputs[i].id){
         case "commentBody":
@@ -124,12 +132,12 @@ export class PostContainerComponent implements OnInit {
     };
 
     if(commentBody == null ||commentBody == undefined){
-      alert("Enter a post title");
+      alert("Enter a Comment");
       properFormat = false;
     }
    
     if(properFormat == true){
-      this.afs.collection("posts").doc(this.blownUP.postID).update({
+      this.afs.collection("posts").doc(this.slectedPost.postID).update({
         "comments": firebase.firestore.FieldValue.arrayUnion(data)
       }); 
     }

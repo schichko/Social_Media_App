@@ -1,4 +1,3 @@
-
 <div *ngFor="let post of totalPosts">
        
         <div class="postContainer">
@@ -6,23 +5,23 @@
                 <h1 class="marginForText title">{{post.title}}</h1>
                 <h1 class="marginForText post-body">{{ post.body}}</h1>   
                 <h1 class="marginForText author">Author: {{ post.poster }}</h1>
-                <button (click)="blowUpPost(post)" class="marginForText">Open Post</button>
+                <button (click)="openPost(post)" class="marginForText">Open Post</button>
 
         </div>
 </div>
 
-<div *ngIf="blownUP">
+<div *ngIf="slectedPost">
 
         <div class="overlay">
 
                 <div class="popup">
 
                         <button (click)="closePost()" >Close Post</button>
-                        <h1>Author: {{ blownUP.poster }}</h1>
-                        <h1>Title: {{ blownUP.title}}</h1>
-                        <h1>Body: {{ blownUP.body}}</h1>  
+                        <h1>Author: {{ slectedPost.poster }}</h1>
+                        <h1>Title: {{ slectedPost.title}}</h1>
+                        <h1>Body: {{ slectedPost.body}}</h1>  
 
-                                <div *ngFor="let comment of blownUP.comments">
+                                <div *ngFor="let comment of slectedPost.comments">
 
                                         <h1>{{comment.poster}} Said</h1>
                                         <h1>{{comment.commentBody}}</h1>
