@@ -1,58 +1,53 @@
 <!-- Site Container is used so we can lock scrolling for the entire screen -->
 <body id = "siteContainer">
 
-    <div *ngIf="auth.user$ | async as user; else login">
+  <div *ngIf="auth.user$ | async as user; else login">
 
-          <div class="container-fluid">
+    <div class="container-fluid">
 
-            <div> 
-              
-              <h1>Social Media Site</h1> 
-              <button class="draw meet pull-right" (click)="auth.signOut()">Sign Out</button>
-            </div> 
-          </div>
-        
-          <pre>
-            {{ user | json }}
-          </pre>
-          <div>
-            {{user.displayName}}
-          </div>
-        <hr>
+      <div> 
 
-          <div class="col-md-2 col-md-offset-5">
-              <button class = "button" (click)="post()" >New Post</button>
-          </div>
+            <h1>Social Media Site</h1> 
+            <button class="draw meet pull-right" (click)="auth.signOut()">Sign Out</button>
+          </div> 
+        </div>
+      
+        <pre>
+          {{ user | json }}
+        </pre>
+        <div>
+          {{user.displayName}}
+        </div>
+      <hr>
 
-        
-    
-          <div  *ngIf="displayPost==true">
-            <app-new-post username = {{user.displayName}} (notify)="handlePost($event)"></app-new-post>
-          </div>
-
-
-    </div>
-
-    <ng-template #login>
-      <button class="button" (click)="auth.googleSignin()">Login with Google</button>
-    </ng-template>
-
-
-    <div *ngIf="auth.user$ | async as user;else unloggedPosts" id = "posts">
-
-          <div class="allPostContainer">
-            <app-post-container username = {{user.displayName}} class="allPostContainer" (notify)="openPost($event)"></app-post-container>
-          </div>
-
-    </div>
-
-    <ng-template #unloggedPosts>
-
-        <div class="allPostContainer">
-          <app-post-container username = null></app-post-container>
+        <div class="col-md-2 col-md-offset-5">
+            <button class = "button" (click)="showPostCreation()" >New Post</button>
         </div>
 
-    </ng-template>
+      
+  
+        <div  *ngIf="createPostFlag==true">
+          <app-new-post username = {{user.displayName}} (notify)="createPost($event)"></app-new-post>
+        </div>
+
+
+        <div class="allPostContainer">
+
+            <app-post-container username = {{user.displayName}} class="allPostContainer" (notify)="openPost($event)"></app-post-container>
+        </div>
+
+  </div>
+
+  
+  <ng-template #login>
+
+    <button class="draw meet pull-right" (click)="auth.googleSignin()">Login with Google</button>
+
+    <div class="allPostContainer">
+
+        <app-post-container username = null class="allPostContainer" (notify)="openPost($event)"></app-post-container>
+    </div>
+  </ng-template>
 
 
   <router-outlet></router-outlet>
