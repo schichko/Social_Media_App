@@ -5,6 +5,9 @@
                 <h1 class="marginForText title">{{post.title}}</h1>
                 <h1 class="marginForText post-body">{{ post.body}}</h1>   
                 <h1 class="marginForText author">Author: {{ post.poster }}</h1>
+                
+                <button (click)= "like(post)" class="marginForText">Like</button>
+                <h1 class="marginForText">Likes: {{post.likes}}</h1>
                 <button (click)="openPost(post)" class="marginForText">Open Post</button>
 
         </div>
