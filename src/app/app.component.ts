@@ -21,7 +21,8 @@ export class AppComponent implements OnInit{
   }
 
   createPostFlag= false;
-  
+  signIn = false;
+
   //Input: None
   //Output: None
   //Inside of the HTML there is a ngIf div that checks if this is true, if it is true we display the create post
@@ -48,6 +49,12 @@ export class AppComponent implements OnInit{
     else{2
       enableBodyScroll(document.getElementById("siteContainer"));
     }
+  }
+
+
+  openRegistration(){
+    this.signIn = true;
+    disableBodyScroll(document.getElementById("siteContainer"));
   }
  
  
