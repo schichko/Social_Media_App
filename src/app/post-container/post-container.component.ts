@@ -13,6 +13,8 @@ import {
 } from '@angular/fire/firestore';
 import { Post } from './post.model';
 
+
+
 @Component({
   selector: 'app-post-container',
   templateUrl: './post-container.component.html',
@@ -33,8 +35,8 @@ export class PostContainerComponent implements OnInit {
   //Input: None
   //Output: None
   //Gets the posts from an async function, what this means is that it works in parallel so as soon as its done it will change our total posts to getPosts() return value
-  ngOnInit() {
-
+  ngOnInit() {  
+    console.log(this.username);
     this.getPosts().then(val => this.totalPosts = val);
   }
 
@@ -48,11 +50,18 @@ export class PostContainerComponent implements OnInit {
       .get()
     
     snapshot.forEach(function(doc) {
+
+        var postLikes = 0;
+        if(doc.data().likes != "" && doc.data().likes != undefined){
+          postLikes = doc.data().likes.length
+        }
+
           const data = { 
+            body: doc.data().body,
+            likes: postLikes,
             postID : doc.id,
             poster: doc.data().poster,
             title: doc.data().title,
-            body: doc.data().body,
           };
           tempArrayOfPost.push(data);
     });
@@ -82,13 +91,19 @@ export class PostContainerComponent implements OnInit {
       .get()
       
       snapshot.forEach(function(doc) {
-
+        
+        var postLikes = 0;
+        if(doc.data().likes != "" && doc.data().likes != undefined){
+          postLikes = doc.data().likes.length
+        }
+    
         const data = { 
+          body: doc.data().body,
+          comments : doc.data().comments,
+          likes : postLikes,
           postID : doc.id,
           poster: doc.data().poster,
-          title: doc.data().title,
-          body: doc.data().body,
-          comments : doc.data().comments
+          title: doc.data().title
         };
         myPost = data;
         
@@ -140,8 +155,50 @@ export class PostContainerComponent implements OnInit {
       this.afs.collection("posts").doc(this.slectedPost.postID).update({
         "comments": firebase.firestore.FieldValue.arrayUnion(data)
       }); 
-    }
-    
+    } 
   }
 
+  //Input: Post that the User has liked
+  //Output: None
+  //Used to handle the async funtion to see if they have liked a post, if they have they unlike it and are removed from the liked array, if they havent they are added
+  like(likedPost : Post){
+    this.alreadyLiked(likedPost.postID,this.username,likedPost.likes).then(val => likedPost.likes = val);   
+  }
+
+  //Input: PostID used for queriying the databse, Username: cannot use this.username in async, Likes: The current number of likes for this post
+  //Output: Likes+1 or Likes-1 depending on if the user is liking or unliking
+  //Queries the database for the list of likes and then checks if the user has already liked the message
+  async alreadyLiked(postID:string,username:string,likes:number){
+    
+    var alreadyLiked = false;
+    const firestore = firebase.firestore();
+    const snapshot = await firestore
+      .collection("posts")
+      .where(firebase.firestore.FieldPath.documentId(), "==", postID)
+      .get()
+      snapshot.forEach(function(doc) {
+
+        if(doc.data().likes.includes(username)){
+          alreadyLiked = true;
+        }
+      });
+      //Adds or removes user from the list of likes
+    if(alreadyLiked == false){
+      this.afs.collection("posts").doc(postID).update({
+        "likes": firebase.firestore.FieldValue.arrayUnion(this.username)
+      }); 
+      likes ++;
+      return likes;
+    }
+    else{
+      this.afs.collection("posts").doc(postID).update({
+        "likes": firebase.firestore.FieldValue.arrayRemove(this.username)
+      }); 
+      likes--;
+      return likes;
+    }
+  
+  }
 }
+
+
