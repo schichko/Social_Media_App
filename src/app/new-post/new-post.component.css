@@ -1,0 +1,11 @@
+.postContainer{
+    margin: 10px;
+    border-radius: 10px;
+    border:1px solid #B4B8AB;
+    background: linear-gradient(to bottom,
+        #2b3252 0%, 
+        #2b3252 20%, 
+        #ffffff 20%, 
+        #ffffff 100%
+    );
+}

@@ -1,9 +1,48 @@
-<div class="overlay">
+<div class="overlay" id="emailSignIn">
     <div class="popup">
-            <h1>HEY LISTEN</h1>
-            <button class="draw meet pull-right" (click)="auth.googleSignin()">Login with Google</button>
+        
+        <div class="container">
+        <div class = "row">
+            <div class ="col">
+                <div class="title">LOGIN</div>
+            </div>  
+            <div class="col">
+                <button class="closeBtn" (click)="closeRegistration()"></button>
+            </div>
+        </div>
+        
 
-            <button class="draw meet pull-right" (click)="auth.facebookSignin()">Login with Facebook</button>
-            <button class="draw meet pull-right" (click)="auth.twitterSignin()">Login with Twitter</button>
+            <div class = "container">
+                <div class="row">
+                    <div class="col-3 mx-auto">
+                        Username: <input type="text" id="Username"/><br>
+                        <button>Check For Availablity</button>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-3 mx-auto">
+                        Email: <input type="text" id="email"/><br>
+                        Password: <input type="password" id="password"/><br>
+                        Confirm Password: <input type="password" id="passwordConfirm"/><br>
+                        <button (click)="submitEmailPass()">Submit</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class = "col">
+                        <button class="loginBtn loginBtn--google" (click)="registerGoogle()">Login with Google  </button>
+                    </div>
+                    <div class = "col">
+                        <button class="loginBtn loginBtn--facebook" (click)="registerFacebook()">Login with Facebook</button>
+                    </div>
+                    <div class = "col">
+                        <button class="loginBtn loginBtn--twitter" (click)="registerTwitter()">Login with Twitter </button>
+                    </div>
+                </div>
+            </div>
+                <h5>Already have an account?</h5>
+                <button class="link">Sign In</button>
     </div>
 </div>

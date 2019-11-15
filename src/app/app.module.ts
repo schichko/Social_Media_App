@@ -15,6 +15,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { NewPostComponent } from './new-post/new-post.component';
 import { PostContainerComponent } from './post-container/post-container.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { UsernameCreatorComponent } from './username-creator/username-creator.component';
 
 
 const config = {
@@ -33,7 +34,8 @@ const config = {
     AppComponent,
     NewPostComponent,
     PostContainerComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    UsernameCreatorComponent
   ],
   imports: [
     BrowserModule,
