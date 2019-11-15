@@ -1,47 +1,72 @@
 <!-- Site Container is used so we can lock scrolling for the entire screen -->
 <body id = "siteContainer">
-
-  <div *ngIf="auth.user$ | async as user; else login">
-
-    <div class="container-fluid">
-
-      <div> 
-
-            <h1>Social Media Site</h1> 
-            <button class="draw meet pull-right" (click)="auth.signOut()">Sign Out</button>
-          </div> 
-        </div>
-      
-        <pre>
-          {{ user | json }}
-        </pre>
-        <div>
-          {{user.displayName}}
-        </div>
-      <hr>
-
-        <div class="col-md-2 col-md-offset-5">
-            <button class = "button" (click)="showPostCreation()" >New Post</button>
-        </div>
-
-      
   
-        <div  *ngIf="createPostFlag==true">
-          <app-new-post username = {{user.displayName}} (notify)="createPost($event)"></app-new-post>
-        </div>
+  <div *ngIf="auth.user$ | async as user; else login">
+    <!-- <div *ngIf="user.displayName; else register"> -->
+      <div class="container-fluid">
+          <div> 
+              <h1>Social Media Site</h1> 
+              <button class="draw meet float-right" (click)="auth.signOut()">Sign Out</button>
+            </div> 
+          </div>
+        
+          <pre>
+            {{ user | json }}
+          </pre>
+      
+          <div class ="container">
+            <div class = "row d-flex justify-content-center">
+              <div class="col-md-6">
+                  <button class = "draw meet" (click)="showPostCreation()" >New Post</button>
+              </div>      
+            </div>
+          </div>
+          
+          <div class ="container">
+              <div class = "row">
+                <div class = "col-md-6">
+
+                </div>
+              </div>
+          </div>
+
+          <div  *ngIf="createPostFlag==true">
+            <app-new-post username = {{user.displayName}} (notify)="createPost($event)"></app-new-post>
+          </div>
 
 
-        <div class="allPostContainer">
+          <div class="allPostContainer">
 
-            <app-post-container username = {{user.displayName}} class="allPostContainer" (notify)="openPost($event)"></app-post-container>
-        </div>
+              <app-post-container username = {{user.displayName}} class="allPostContainer" (notify)="openPost($event)"></app-post-container>
+          </div>
+    <!-- </div>  
+
+    <ng-template #register>
+       <div class="usernameBackground"> 
+    
+
+        <app-username-creator userID={{user.uid}}></app-username-creator>
+      </div> 
+    </ng-template> -->
 
   </div>
 
   
   <ng-template #login>
 
-    <button class="draw meet pull-right" (click)="auth.googleSignin()">Login with Google</button>
+    <!-- <div class="container">
+      <div class="row"> -->
+        <!-- <div class="col align-self-end"> -->
+          <button class="draw meet float-right" (click)="openRegistration()">Sign Up</button>
+        <!-- </div>
+      </div>
+    </div> -->
+
+
+
+    <div *ngIf="signIn==true">
+      <app-registration (notify)="closeRegistration($event)"></app-registration>
+    </div>
 
     <div class="allPostContainer">
 

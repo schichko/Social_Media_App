@@ -14,6 +14,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { NewPostComponent } from './new-post/new-post.component';
 import { PostContainerComponent } from './post-container/post-container.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { UsernameCreatorComponent } from './username-creator/username-creator.component';
 
 
 const config = {
@@ -31,7 +33,9 @@ const config = {
   declarations: [
     AppComponent,
     NewPostComponent,
-    PostContainerComponent
+    PostContainerComponent,
+    RegistrationComponent,
+    UsernameCreatorComponent
   ],
   imports: [
     BrowserModule,

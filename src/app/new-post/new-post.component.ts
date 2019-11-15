@@ -49,9 +49,9 @@ postTitle
     console.log(postBody);
 
     const data = {
+      body: postBody,
       poster: this.username,
       title: postTitle,
-      body: postBody
     };
 
     if(postTitle == null ||postTitle == undefined){
