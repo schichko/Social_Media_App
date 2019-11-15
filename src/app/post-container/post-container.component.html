@@ -5,35 +5,12 @@
                 <h1 class="marginForText title">{{post.title}}</h1>
                 <h1 class="marginForText post-body">{{ post.body}}</h1>   
                 <h1 class="marginForText author">Author: {{ post.poster }}</h1>
-                
+                <h1 class="marginForText author">Author: {{ post.postID }}</h1>
+
                 <button (click)= "like(post)" class="marginForText">Like</button>
                 <h1 class="marginForText">Likes: {{post.likes}}</h1>
-                <button (click)="openPost(post)" class="marginForText">Open Post</button>
-
-        </div>
-</div>
-
-<div *ngIf="slectedPost">
-
-        <div class="overlay">
-
-                <div class="popup">
-
-                        <button (click)="closePost()" >Close Post</button>
-                        <h1>Author: {{ slectedPost.poster }}</h1>
-                        <h1>Title: {{ slectedPost.title}}</h1>
-                        <h1>Body: {{ slectedPost.body}}</h1>  
-
-                                <div *ngFor="let comment of slectedPost.comments">
-
-                                        <h1>{{comment.poster}} Said</h1>
-                                        <h1>{{comment.commentBody}}</h1>
-                                        <h1>At {{comment.commentTime}}</h1>
-                                </div>
-
-                        Post Comment : <input type="text" name="Body" id="commentBody"><br>
-                        <button class = "button" (click)="postComment()">Submit</button>
-                        
-                </div>
+                <!-- <button (click)="openPost(post)" class="marginForText">Open Post</button> -->
+                <button class = "marginForText" routerLink="post/{{post.postID}}" routerLinkActive="active" >Open Post</button> 
+             
         </div>
 </div>

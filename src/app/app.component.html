@@ -17,7 +17,8 @@
           <div class ="container">
             <div class = "row d-flex justify-content-center">
               <div class="col-md-6">
-                  <button class = "draw meet" (click)="showPostCreation()" >New Post</button>
+                  <!-- <button class = "draw meet" (click)="showPostCreation()" >New Post</button> -->
+                  <button class = "draw meet" routerLink="newPost/{{user.username}}" routerLinkActive="active">New Post</button> 
               </div>      
             </div>
           </div>
@@ -25,18 +26,19 @@
           <div class ="container">
               <div class = "row">
                 <div class = "col-md-6">
-
+                    Post Topic: <input type="text" placeholder="Search for Topic" id="searchBar" (keypress)="search($event)"><br>
                 </div>
               </div>
           </div>
 
-          <div  *ngIf="createPostFlag==true">
+          <!-- <div  *ngIf="createPostFlag==true">
             <app-new-post username = {{user.displayName}} (notify)="createPost($event)"></app-new-post>
-          </div>
+          </div> -->
 
+          
 
           <div class="allPostContainer">
-
+ 
               <app-post-container username = {{user.displayName}} class="allPostContainer" (notify)="openPost($event)"></app-post-container>
           </div>
     <!-- </div>  
@@ -75,5 +77,5 @@
   </ng-template>
 
 
-  <router-outlet></router-outlet>
+  <router-outlet (activate)="componentAdded($event)" (deactivate)="componentRemoved($event)"></router-outlet>
 </body>

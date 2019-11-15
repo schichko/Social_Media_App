@@ -15,7 +15,9 @@ import { switchMap } from 'rxjs/operators';
 })
 export class AppComponent implements OnInit{
   
-  constructor(public auth: AuthService) {}
+  constructor(public auth: AuthService) {
+   
+  }
   
   ngOnInit(){
   }
@@ -63,6 +65,19 @@ export class AppComponent implements OnInit{
   }
  
  
-  
- 
+  search(event){
+    if(event.key === 'Enter'){
+      console.log("ERE");
+    }
+  }  
+
+  componentAdded($event){
+    console.log("ADDEd");
+    disableBodyScroll(document.getElementById("siteContainer"))
+  }
+  componentRemoved($event){
+    console.log("Removed");
+    enableBodyScroll(document.getElementById("siteContainer"))
+  }
+
 }

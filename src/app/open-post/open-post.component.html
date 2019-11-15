@@ -1,0 +1,25 @@
+
+<div class="overlay">
+
+    <div class="popup">
+
+            <button (click)="closePost()" >Close Post</button>
+            <div *ngIf="myPage">
+                <h1>Author: {{ myPage.poster }}</h1>
+                <h1>Title: {{ myPage.title}}</h1>
+                <h1>Body: {{ myPage.body}}</h1>  
+                        
+                    
+                            <div *ngFor="let comment of myPage.comments">
+
+                                    <h1>{{comment.poster}} Said</h1>
+                                    <h1>{{comment.commentBody}}</h1>
+                                    <h1>At {{comment.commentTime}}</h1>
+                            </div>
+                      
+
+                Post Comment : <input type="text" name="Body" id="commentBody"><br>
+            <!-- <button class = "button" (click)="postComment()">Submit</button> -->
+        </div>
+    </div>
+</div>

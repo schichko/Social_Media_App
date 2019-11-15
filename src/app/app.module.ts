@@ -16,6 +16,7 @@ import { NewPostComponent } from './new-post/new-post.component';
 import { PostContainerComponent } from './post-container/post-container.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { UsernameCreatorComponent } from './username-creator/username-creator.component';
+import { OpenPostComponent } from './open-post/open-post.component';
 
 
 const config = {
@@ -35,7 +36,8 @@ const config = {
     NewPostComponent,
     PostContainerComponent,
     RegistrationComponent,
-    UsernameCreatorComponent
+    UsernameCreatorComponent,
+    OpenPostComponent
   ],
   imports: [
     BrowserModule,
