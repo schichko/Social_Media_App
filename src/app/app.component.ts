@@ -26,16 +26,27 @@ export class AppComponent implements OnInit{
     }
   }
 
+  registration = false;
   signIn = false;
   searchTopic;
 
   //Both of these functions may be able to be replaced with routing but since they are in the header it might not be worth it
   openRegistration(){
-    this.signIn = true;
+    this.registration = true;
     disableBodyScroll(document.getElementById("siteContainer"));
   }
 
   closeRegistration(eventData: boolean){
+    this.registration = eventData;
+    enableBodyScroll(document.getElementById("siteContainer"))
+  }
+
+  openSignIn(){
+    this.signIn = true;
+    disableBodyScroll(document.getElementById("siteContainer"));
+  }
+
+  closeSignIn(eventData: boolean){
     this.signIn = eventData;
     enableBodyScroll(document.getElementById("siteContainer"))
   }

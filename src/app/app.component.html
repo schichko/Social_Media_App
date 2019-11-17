@@ -48,20 +48,24 @@
     <!-- <div class="container">
       <div class="row"> -->
         <!-- <div class="col align-self-end"> -->
+          <button class="draw meet float-right" (click)="openSignIn()">Login</button>
           <button class="draw meet float-right" (click)="openRegistration()">Sign Up</button>
         <!-- </div>
       </div>
     </div> -->
 
 
+    <div *ngIf="signIn ==true">
+      <app-sign-in (notify)="closeSignIn($event)"></app-sign-in>
+    </div>
 
-    <div *ngIf="signIn==true">
+    <div *ngIf="registration==true">
       <app-registration (notify)="closeRegistration($event)"></app-registration>
     </div>
 
     <div class="allPostContainer">
 
-        <app-post-container username = null class="allPostContainer"></app-post-container>
+        <app-post-container username = null [setTopic]="searchTopic" class="allPostContainer"></app-post-container>
     </div>
   </ng-template>
 

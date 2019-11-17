@@ -73,7 +73,7 @@ export class RegistrationComponent implements OnInit {
     if(Username.length >= 1){
       let result = await this.checkUsername(Username); 
       if(result == 1){
-        var user = await this.auth.googleSignin(Username);
+        var user = await this.auth.googleRegister(Username);
         this.notify.emit(false);
       }
     }
@@ -85,7 +85,7 @@ export class RegistrationComponent implements OnInit {
     if(Username.length >= 1){
       let result = await this.checkUsername(Username); 
       if(result == 1){
-        var user = this.auth.facebookSignin(Username);
+        var user = this.auth.facebookRegister(Username);
         this.notify.emit(false);
       }
     }
@@ -98,7 +98,7 @@ export class RegistrationComponent implements OnInit {
     if(Username.length >= 1){
       let result = await this.checkUsername(Username); 
       if(result == 1){  
-        var user = this.auth.twitterSignin(Username);
+        var user = this.auth.twitterRegister(Username);
         this.notify.emit(false);
       }
       

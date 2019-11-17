@@ -41,9 +41,8 @@ export class AuthService {
     const credential = await this.afAuth.auth.createUserWithEmailAndPassword(email,password).catch(function(error){
       var errorCode = error.code;
       var errorMessage = error.message;
-      console.log(typeof(error))
       console.error(errorCode)
-      console.log(errorMessage)      
+      console.error(errorMessage)    
       if(errorCode == "auth/invalid-email"){
         return -1;
       }
@@ -54,11 +53,7 @@ export class AuthService {
         return -3;
       }
     })
-    console.log("LOGGING PROMISE");
-    console.log(credential)
-    
     if(typeof credential != 'number'){
-      console.log("GOOD CREDIANTAL")
       return  this.updateUserData(credential.user,username);
     }
     else{
@@ -66,12 +61,26 @@ export class AuthService {
     }
   }
 
+  async emailSignIn(email:string,password:string){
+  
+    const credential = await this.afAuth.auth.signInWithEmailAndPassword(email,password).then(function(firebaseUser){
+      return this.getUserData(firebaseUser.user);
+    }).catch(function(error){
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.error(errorCode)
+      console.error(errorMessage) 
+    })
+    
+
+  }
+
   //For facebook you need to go to 
   //https://developers.facebook.com/
   //And register to get an app ID and secret
   //You also need to take the oauth token firebase gives you and put it in with the facebook dev tools
   //Link for this project: https://developers.facebook.com/apps/2569224083305981/fb-login/settings/
-  async facebookSignin(username:string){
+  async facebookRegister(username:string){
     const provider = new auth.FacebookAuthProvider();
     // provider.addScope('user_birthday');
     const credential = await this.afAuth.auth.signInWithPopup(provider);
@@ -84,7 +93,7 @@ export class AuthService {
     }
   }
 
-  async googleSignin(username:string) {
+  async googleRegister(username:string) {
     const provider = new auth.GoogleAuthProvider();
     const credential = await this.afAuth.auth.signInWithPopup(provider);
     if(credential.additionalUserInfo.isNewUser == false){
@@ -101,7 +110,7 @@ export class AuthService {
   //And register to get an app ID and secret
   //Important: In permissions tab turn off write access, we only need to read the user
   //Link for this project: https://developer.twitter.com/en/apps/16997380
-  async twitterSignin(username:string){
+  async twitterRegister(username:string){
     const provider = new auth.TwitterAuthProvider();
     const credential = await this.afAuth.auth.signInWithPopup(provider);
     if(credential.additionalUserInfo.isNewUser == false){
@@ -110,6 +119,51 @@ export class AuthService {
     else{
       this.afs.collection("usernames").doc(username).set({});
       return this.updateUserData(credential.user,username);
+    }
+  }
+
+
+  //For facebook you need to go to 
+  //https://developers.facebook.com/
+  //And register to get an app ID and secret
+  //You also need to take the oauth token firebase gives you and put it in with the facebook dev tools
+  //Link for this project: https://developers.facebook.com/apps/2569224083305981/fb-login/settings/
+  async facebookSignin(){
+    const provider = new auth.FacebookAuthProvider();
+    // provider.addScope('user_birthday');
+    const credential = await this.afAuth.auth.signInWithPopup(provider);
+    if(credential.additionalUserInfo.isNewUser == false){
+      return this.getUserData(credential.user);
+    }
+    else{
+      console.log("ERROR");
+    }
+  }
+
+  async googleSignin() {
+    const provider = new auth.GoogleAuthProvider();
+    const credential = await this.afAuth.auth.signInWithPopup(provider);
+    if(credential.additionalUserInfo.isNewUser == false){
+      return this.getUserData(credential.user);
+    }
+    else{
+      console.log("ERROR");
+    }
+  }
+
+  //For Twitter you need to make a developer account at 
+  //https://developer.twitter.com
+  //And register to get an app ID and secret
+  //Important: In permissions tab turn off write access, we only need to read the user
+  //Link for this project: https://developer.twitter.com/en/apps/16997380
+  async twitterSignin(){
+    const provider = new auth.TwitterAuthProvider();
+    const credential = await this.afAuth.auth.signInWithPopup(provider);
+    if(credential.additionalUserInfo.isNewUser == false){
+      return this.getUserData(credential.user);
+    }
+    else{
+      console.log("ERROR");
     }
   }
   

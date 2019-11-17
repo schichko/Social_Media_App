@@ -1,0 +1,36 @@
+<div class="overlay" id="emailSignIn">
+    <div class="popup">
+        
+        <div class="container">
+            <div class = "row">
+                <div class ="col">
+                    <div class="title">LOGIN</div>
+                </div>  
+                <div class="col">
+                    <button class="closeBtn" (click)="closeSignIn()"></button>
+                </div>
+            </div>
+            
+
+            <div class="row">
+                <div class="col-3 mx-auto">
+                    Email: <input type="text" id="email"/><br>
+                    Password: <input type="password" id="password"/><br>
+                    <button (click)="signInEmailPass()">Submit</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class = "col">
+                    <button class="loginBtn loginBtn--google" (click)="signInGoogle()">Login with Google  </button>
+                </div>
+                <div class = "col">
+                    <button class="loginBtn loginBtn--facebook" (click)="signInFacebook()">Login with Facebook</button>
+                </div>
+                <div class = "col">
+                    <button class="loginBtn loginBtn--twitter" (click)="signInTwitter()">Login with Twitter </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
