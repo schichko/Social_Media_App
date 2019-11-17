@@ -1,7 +1,8 @@
 export interface Post {
     comments? : Array<Comment>;
     body: string;
-    likes: number;
+    likes?: Array<String>;
+    numLikes: number;
     postID : string;
     poster: string;
     title: string;

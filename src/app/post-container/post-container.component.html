@@ -1,3 +1,5 @@
+<div>{{topic}}</div>
+
 <div *ngFor="let post of totalPosts">
        
         <div class="postContainer">
@@ -5,11 +7,9 @@
                 <h1 class="marginForText title">{{post.title}}</h1>
                 <h1 class="marginForText post-body">{{ post.body}}</h1>   
                 <h1 class="marginForText author">Author: {{ post.poster }}</h1>
-                <h1 class="marginForText author">Author: {{ post.postID }}</h1>
 
                 <button (click)= "like(post)" class="marginForText">Like</button>
-                <h1 class="marginForText">Likes: {{post.likes}}</h1>
-                <!-- <button (click)="openPost(post)" class="marginForText">Open Post</button> -->
+                <h1 class="marginForText">Likes: {{post.numLikes}}</h1>
                 <button class = "marginForText" routerLink="post/{{post.postID}}" routerLinkActive="active" >Open Post</button> 
              
         </div>
