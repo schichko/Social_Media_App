@@ -1,9 +1,7 @@
 import {
   Component, 
   OnInit, 
-  Input,
-  EventEmitter,
-  Output} from '@angular/core';
+  Input} from '@angular/core';
 import * as firebase from 'firebase/app';
 import {
   AngularFirestore,
@@ -12,7 +10,7 @@ import {
   fromDocRef
 } from '@angular/fire/firestore';
 import { Post } from './post.model';
-
+import { HostListener } from '@angular/core';
 
 
 @Component({
@@ -22,23 +20,47 @@ import { Post } from './post.model';
 })
 export class PostContainerComponent implements OnInit {
 
-  constructor(public afs: AngularFirestore) { }
-
-  @Output() notify: EventEmitter<boolean> = new EventEmitter<boolean>();
+  constructor(public afs: AngularFirestore) { 
+    this.originalLocation = window.location.href;
+  }
 
   @Input()
   username: string;
 
-  totalPosts : Post[] = new Array();
-  slectedPost : Post;
+  originalLocation;
+
+
+  @Input() set setTopic(topic:string){
+    
+    console.log("settingTopic")
+    if(topic != undefined && topic != "" && topic != null){
+      this.topic = topic;
+      this.getTopicPost().then(val => this.totalPosts = val);
+    }
+    else{
+      this.getPosts().then(val => this.totalPosts = val);
+    }
+  }
   
+  // @HostListener('window:popstate', ['$event'])
+  // onPopState(event) {
+  //   console.log('Back button pressed');
+  // }
+  
+  
+  topic : string;
+
+  totalPosts : Post[] = new Array();
+  
+   
+  
+
   //Input: None
   //Output: None
   //Gets the posts from an async function, what this means is that it works in parallel so as soon as its done it will change our total posts to getPosts() return value
   ngOnInit() {  
-    console.log(this.username);
-    this.getPosts().then(val => this.totalPosts = val);
-  }
+    
+  }  
 
   //Input: None
   //Output : Returns an Array of Type post that  we later assign to this.totalPostVals(Cant Assign this inside of an async) at least i never figured it out 
@@ -58,7 +80,7 @@ export class PostContainerComponent implements OnInit {
 
           const data = { 
             body: doc.data().body,
-            likes: postLikes,
+            numLikes : postLikes,
             postID : doc.id,
             poster: doc.data().poster,
             title: doc.data().title,
@@ -69,28 +91,40 @@ export class PostContainerComponent implements OnInit {
     return tempArrayOfPost;
   }
 
-  //Input: A Selected Post
-  //Output: None
-  //Opens a user selected post and assigns it to the selected Post Value
-  //This Also Emits the value of true for postSeleced Showing that some post was selected
-  // openPost(){    
-  //   this.notify.emit(true);
-  // }
 
-  //Input: None
-  //Output: None
-  //We Reset the selected post to nothing and let the app component know that it can start scrolling again by emitting that a post is no longer selected
-  closePost(eventData: boolean){
-    console.log("HERE")
-    this.notify.emit(false);
+  async getTopicPost(){
+    var tempArrayOfPost : Post[] = new Array();
+    const firestore = firebase.firestore();
+    const snapshot = await firestore
+      .collection("posts")
+      .where("postTopic","==",this.topic)
+      .get()
+
+    snapshot.forEach(function(doc) {
+
+      var postLikes = 0;
+      if(doc.data().likes != "" && doc.data().likes != undefined){
+        postLikes = doc.data().likes.length
+      }
+
+        const data = { 
+          body: doc.data().body,
+          numLikes : postLikes,
+          postID : doc.id,
+          poster: doc.data().poster,
+          title: doc.data().title,
+        };
+        tempArrayOfPost.push(data);
+    });
+
+    return tempArrayOfPost;
   }
-
  
   //Input: Post that the User has liked
   //Output: None
   //Used to handle the async funtion to see if they have liked a post, if they have they unlike it and are removed from the liked array, if they havent they are added
   like(likedPost : Post){
-    this.alreadyLiked(likedPost.postID,this.username,likedPost.likes).then(val => likedPost.likes = val);   
+    this.alreadyLiked(likedPost.postID,this.username,likedPost.numLikes).then(val => likedPost.numLikes = val);   
   }
 
   //Input: PostID used for queriying the databse, Username: cannot use this.username in async, Likes: The current number of likes for this post

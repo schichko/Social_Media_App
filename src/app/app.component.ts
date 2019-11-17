@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from './services/auth.service'
 import {AngularFireDatabase } from '@angular/fire/database'
-
+import { HostListener } from '@angular/core';
 import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -13,47 +11,25 @@ import { switchMap } from 'rxjs/operators';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent implements OnInit{
   
-  constructor(public auth: AuthService) {
-   
-  }
+  constructor(public auth: AuthService) {  }
   
-  ngOnInit(){
+  ngOnInit(){}
+
+
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event) {
+    window.onpopstate = function() {
+     console.log("GEE")
+    }
   }
 
-  createPostFlag= false;
   signIn = false;
+  searchTopic;
 
-  //Input: None
-  //Output: None
-  //Inside of the HTML there is a ngIf div that checks if this is true, if it is true we display the create post
-  showPostCreation(){
-    this.createPostFlag = !this.createPostFlag;
-  }
-  
-  //Input: Actually doesnt matter
-  //Output: None
-  //Event Trigger is when a user submits their post
-  createPost(eventData: boolean) {
-    this.createPostFlag = !this.createPostFlag;
-  }
-
-  //Input: A boolean to determine if this is going to be enable or disabling scrolling (AKA Opening or closing the post)
-  //Output: None
-  //Event Trigger is when a user opens a post
-  openPost(eventData: boolean) {
-    if(eventData == true){
-      //Body Scroll is a livesaver allows us to select an element and disable or enable all scrolling involved with this element
-      //(npm install body-scroll-lock) to install
-      disableBodyScroll(document.getElementById("siteContainer"));
-    }
-    else{
-      enableBodyScroll(document.getElementById("siteContainer"));
-    }
-  }
-
-
+  //Both of these functions may be able to be replaced with routing but since they are in the header it might not be worth it
   openRegistration(){
     this.signIn = true;
     disableBodyScroll(document.getElementById("siteContainer"));
@@ -68,15 +44,29 @@ export class AppComponent implements OnInit{
   search(event){
     if(event.key === 'Enter'){
       console.log("ERE");
+      console.log(this.searchTopic);
+      this.searchTopic = (<HTMLInputElement>document.getElementById("searchBar")).value.toLowerCase();
+      console.log("BEFORE"+ this.searchTopic)
+      if(this.searchTopic == null ||this.searchTopic =="" ||this.searchTopic==undefined){
+        this.searchTopic = undefined;
+      }
+      console.log("AFTER"+ this.searchTopic)
     }
+    
   }  
 
+  //Input: None
+  //Output: None
+  //Each time we tell the angular router we want to display something else, we disable body scroll
   componentAdded($event){
-    console.log("ADDEd");
+    console.log($event);
     disableBodyScroll(document.getElementById("siteContainer"))
   }
+
+  //Input: None
+  //Output: None
+  //Each time we go back in the history, either via a button or the actually html back button we want to enable body scroll again
   componentRemoved($event){
-    console.log("Removed");
     enableBodyScroll(document.getElementById("siteContainer"))
   }
 

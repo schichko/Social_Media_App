@@ -2,7 +2,6 @@
 <body id = "siteContainer">
   
   <div *ngIf="auth.user$ | async as user; else login">
-    <!-- <div *ngIf="user.displayName; else register"> -->
       <div class="container-fluid">
           <div> 
               <h1>Social Media Site</h1> 
@@ -17,7 +16,6 @@
           <div class ="container">
             <div class = "row d-flex justify-content-center">
               <div class="col-md-6">
-                  <!-- <button class = "draw meet" (click)="showPostCreation()" >New Post</button> -->
                   <button class = "draw meet" routerLink="newPost/{{user.username}}" routerLinkActive="active">New Post</button> 
               </div>      
             </div>
@@ -26,31 +24,22 @@
           <div class ="container">
               <div class = "row">
                 <div class = "col-md-6">
-                    Post Topic: <input type="text" placeholder="Search for Topic" id="searchBar" (keypress)="search($event)"><br>
+                    Search for Topic: <input type="text" placeholder="Search for Topic" id="searchBar" (keypress)="search($event)"><br>
                 </div>
               </div>
           </div>
 
-          <!-- <div  *ngIf="createPostFlag==true">
-            <app-new-post username = {{user.displayName}} (notify)="createPost($event)"></app-new-post>
-          </div> -->
-
-          
-
-          <div class="allPostContainer">
- 
-              <app-post-container username = {{user.displayName}} class="allPostContainer" (notify)="openPost($event)"></app-post-container>
+          <div *ngIf="searchTopic; else allPosts">
+            <div class="allPostContainer">
+                <h1>{{searchTopic}}</h1>
+                <app-post-container username = {{user.username}} [setTopic]="searchTopic" class="allPostContainer"></app-post-container>
+            </div>
           </div>
-    <!-- </div>  
-
-    <ng-template #register>
-       <div class="usernameBackground"> 
-    
-
-        <app-username-creator userID={{user.uid}}></app-username-creator>
-      </div> 
-    </ng-template> -->
-
+          <ng-template #allPosts>
+            <div class="allPostContainer">
+                <app-post-container username = {{user.username}} [setTopic]="searchTopic" class="allPostContainer"></app-post-container>
+            </div>
+          </ng-template>
   </div>
 
   
@@ -72,7 +61,7 @@
 
     <div class="allPostContainer">
 
-        <app-post-container username = null class="allPostContainer" (notify)="openPost($event)"></app-post-container>
+        <app-post-container username = null class="allPostContainer"></app-post-container>
     </div>
   </ng-template>
 

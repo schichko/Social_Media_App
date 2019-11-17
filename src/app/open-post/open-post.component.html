@@ -1,25 +1,38 @@
 
-<div class="overlay">
+<div *ngIf="auth.user$ | async as user">
+    <div class="overlay">
 
-    <div class="popup">
+        <div class="popup">
 
-            <button (click)="closePost()" >Close Post</button>
-            <div *ngIf="myPage">
-                <h1>Author: {{ myPage.poster }}</h1>
-                <h1>Title: {{ myPage.title}}</h1>
-                <h1>Body: {{ myPage.body}}</h1>  
+            <div *ngIf="openPost">
+
+                <button (click)="closePost()" >Close Post</button>
+                <h1>Author: {{ openPost.poster }}</h1>
+                <h1>Title: {{ openPost.title}}</h1>
+                <h1>Body: {{ openPost.body}}</h1>  
                         
                     
-                            <div *ngFor="let comment of myPage.comments">
-
+                            <div *ngFor="let comment of openPostComments">
                                     <h1>{{comment.poster}} Said</h1>
                                     <h1>{{comment.commentBody}}</h1>
                                     <h1>At {{comment.commentTime}}</h1>
+                                    <h1>Replies:</h1>
+                                    Post Reply : <input type="text" name="Body" id="commentReply"><br>
+                                    <button class = "button" (click)="replyToComment(comment.commentId,user.username)">Reply</button>
+                                    <div *ngFor="let replies of comment.replies">
+                                        <h1>{{replies.poster}} Said</h1>
+                                        <h1>{{replies.commentBody}}</h1>
+                                        <h1>At {{replies.commentTime}}</h1>
+                                    </div>
+
+                                    
+                                    <br>
                             </div>
-                      
+                        
 
                 Post Comment : <input type="text" name="Body" id="commentBody"><br>
-            <!-- <button class = "button" (click)="postComment()">Submit</button> -->
+                <button class = "button" (click)="postComment(user.username)">Submit</button>
+            </div>
         </div>
     </div>
 </div>
