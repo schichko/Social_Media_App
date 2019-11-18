@@ -11,7 +11,7 @@ import {
 } from '@angular/fire/firestore';
 import { Post } from './post.model';
 import { HostListener } from '@angular/core';
-
+import {AuthService} from '../services/auth.service'
 
 @Component({
   selector: 'app-post-container',
@@ -20,8 +20,9 @@ import { HostListener } from '@angular/core';
 })
 export class PostContainerComponent implements OnInit {
 
-  constructor(public afs: AngularFirestore) { 
+  constructor(public afs: AngularFirestore,public auth: AuthService) { 
     this.originalLocation = window.location.href;
+    console.log(this.username);
   }
 
   @Input()
@@ -59,7 +60,7 @@ export class PostContainerComponent implements OnInit {
   //Output: None
   //Gets the posts from an async function, what this means is that it works in parallel so as soon as its done it will change our total posts to getPosts() return value
   ngOnInit() {  
-    
+    console.log(this.username);
   }  
 
   //Input: None
@@ -161,6 +162,8 @@ export class PostContainerComponent implements OnInit {
     }
   
   }
+
+  
 }
 
 

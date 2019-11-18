@@ -1,16 +1,35 @@
 <div>{{topic}}</div>
+<!-- 
+<div *ngIf = "username==undefined; else loggedIn">
+        <div *ngFor="let post of totalPosts">
+                <div class="postContainer">
 
-<div *ngFor="let post of totalPosts">
-       
-        <div class="postContainer">
-
-                <h1 class="marginForText title">{{post.title}}</h1>
-                <h1 class="marginForText post-body">{{ post.body}}</h1>   
-                <h1 class="marginForText author">Author: {{ post.poster }}</h1>
-
-                <button (click)= "like(post)" class="marginForText">Like</button>
-                <h1 class="marginForText">Likes: {{post.numLikes}}</h1>
-                <button class = "marginForText" routerLink="post/{{post.postID}}" routerLinkActive="active" >Open Post</button> 
-             
+                        <h1 class="marginForText title">{{post.title}}</h1>
+                        <h1 class="marginForText post-body">{{ post.body}}</h1>   
+                        <h1 class="marginForText author">Author: {{ post.poster }}</h1>
+                        
+                        <h1 class="marginForText">Likes: {{post.numLikes}}</h1>
+                        <button class = "marginForText" routerLink="post/{{post.postID}}" routerLinkActive="active" >Open Post</button> 
+                
+                </div>
         </div>
-</div>
+</div> -->
+
+<!-- <ng-template #loggedIn> -->
+        <div *ngFor="let post of totalPosts">
+                <div class="postContainer">
+                        <h1 class="marginForText title">{{post.title}}</h1>
+                        <h1 class="marginForText post-body">{{ post.body}}</h1>   
+                        <h1 class="marginForText author">Author: {{ post.poster }}</h1>
+
+                  
+                        <div *ngIf="auth.user$ | async as user">
+                                <button (click)= "like(post)" class="marginForText">Like</button>
+                        </div>
+                        
+                        <h1 class="marginForText">Likes: {{post.numLikes}}</h1>
+                        <button class = "marginForText" routerLink="post/{{post.postID}}" routerLinkActive="active" >Open Post</button> 
+                
+                </div>
+        </div>
+<!-- </ng-template> -->
