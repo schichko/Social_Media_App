@@ -4,4 +4,6 @@ export interface Comment {
     poster: string;
     commentBody: string;
     replies?:Array<Comment>;
+    numLikes:number;
+    likes?:Array<String>;
 }

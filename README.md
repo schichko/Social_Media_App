@@ -25,3 +25,18 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+##Firebase Deploy
+
+firebase deploy
+
+
+
+Things I want to improve for this project (In no order):
+
+
+Sub 1. STYLING
+
+1. When a user has something wrong with their registration  let them knonw
+2. When a user has something wrong with their sign in let them know
+3. Add a section for User data (profile picture and stuff like that)

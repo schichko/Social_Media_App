@@ -1,48 +1,77 @@
 <div class="overlay" id="emailSignIn">
     <div class="popup">
-        
-        <div class="container">
-        <div class = "row">
-            <div class ="col">
-                <div class="title">LOGIN</div>
-            </div>  
-            <div class="col">
-                <button class="closeBtn" (click)="closeRegistration()"></button>
+            
+            <div class="container">
+            <div class = "row">
+                <div class ="col">
+                    <div class="title">Registration</div>
+                </div>  
+                <div class="col">
+                    <!-- <input type="image" class="float-right" src="'../assets/images/utilityIcons/close.png" (click)="closeRegistration()" width="48" height="48"> -->
+                    <button class="closeBtn float-right" (click)="closeRegistration()"></button>
+
+                </div>
             </div>
+
+            <div *ngIf = "emailInUseFlag==true">
+                    <div class = "container">
+                        <div class ="row">
+                            <h5>Email Already in Use, please sign in</h5>
+                        </div>
+                    </div>
+            </div>
+            
+
+                <div class = "container">
+                    <div class="row">
+                        <div class="col-3 mx-auto">
+                            <h4>Choose a Username</h4>
+                        </div>
+                        <div class="col-3 mx-auto">
+                            Username: <input type="text" id="Username" (focusout)="checkUsernameButton()"/><br>
+                            <div *ngIf ="userNameFlag==true">
+                                <h4>{{userNameInfo}}</h4>
+                            </div>
+                            <!-- <button class = "inline" (click)="checkUsernameButton()">Check For Availablity</button> -->
+                        </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="row">
+                        <div class="col-3 mx-auto">
+                            <h4>Sign in with Email</h4>
+                        </div>
+                        <div class="col-3 mx-auto">
+                            Email: <input type="text" id="email"/><br>
+                            Password: <input type="password" id="password"/><br>
+                            Confirm Password: <input type="password" id="passwordConfirm"/><br>
+                            <button (click)="submitEmailPass()">Submit</button>
+                        </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="row">
+                        <div class = "col">
+                            <h4>Or Sign In with one of these providers</h4>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class = "col">
+                            <button class="loginBtn loginBtn--google" (click)="registerGoogle()">Login with Google  </button>
+                        </div>
+                        <div class = "col">
+                            <button class="loginBtn loginBtn--facebook" (click)="registerFacebook()">Login with Facebook</button>
+                        </div>
+                        <div class = "col">
+                            <button class="loginBtn loginBtn--twitter" (click)="registerTwitter()">Login with Twitter </button>
+                        </div>
+                    </div>
+                </div>
+                    <h5>Already have an account?</h5>
+                    <button class="link">Sign In</button>
         </div>
-        
-
-            <div class = "container">
-                <div class="row">
-                    <div class="col-3 mx-auto">
-                        Username: <input type="text" id="Username"/><br>
-                        <button>Check For Availablity</button>
-                    </div>
-                </div>
-
-
-                <div class="row">
-                    <div class="col-3 mx-auto">
-                        Email: <input type="text" id="email"/><br>
-                        Password: <input type="password" id="password"/><br>
-                        Confirm Password: <input type="password" id="passwordConfirm"/><br>
-                        <button (click)="submitEmailPass()">Submit</button>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class = "col">
-                        <button class="loginBtn loginBtn--google" (click)="registerGoogle()">Login with Google  </button>
-                    </div>
-                    <div class = "col">
-                        <button class="loginBtn loginBtn--facebook" (click)="registerFacebook()">Login with Facebook</button>
-                    </div>
-                    <div class = "col">
-                        <button class="loginBtn loginBtn--twitter" (click)="registerTwitter()">Login with Twitter </button>
-                    </div>
-                </div>
-            </div>
-                <h5>Already have an account?</h5>
-                <button class="link">Sign In</button>
     </div>
 </div>

@@ -37,6 +37,7 @@ export class AppComponent implements OnInit{
   }
 
   closeRegistration(eventData: boolean){
+    console.log("HERE")
     this.registration = eventData;
     enableBodyScroll(document.getElementById("siteContainer"))
   }
@@ -78,6 +79,7 @@ export class AppComponent implements OnInit{
   //Output: None
   //Each time we go back in the history, either via a button or the actually html back button we want to enable body scroll again
   componentRemoved($event){
+    console.log("Removing");
     enableBodyScroll(document.getElementById("siteContainer"))
   }
 

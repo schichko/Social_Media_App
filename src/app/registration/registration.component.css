@@ -73,16 +73,32 @@
     background: #ED2553;
  }
 
- /* .closeBtn{
-    background: url('../assets/images/utilityIcons/close.png') 12px 12px no-repeat;
- } */
+  hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+  }
+
+ .closeBtn{
+    background-repeat: no-repeat;
+    background-position:50% 50%;
+    background-color: transparent;
+    height :50px;
+    width :50px;
+    background-size:100%;
+    border:0;
+   background-image: url('../assets/images/utilityIcons/closeLogin.png') ;
+ }
 
 /* Shared */
 .loginBtn {
     font-family: 'Cairo', sans-serif;
     box-sizing: border-box;
     position: relative;
-    /* width: 13em;  - apply for fixed size */
+    /* width: 13em;  - apply for fixed size */  
     margin: 0.2em;
     padding: 0 15px 0 46px;
     border: none;
@@ -154,4 +170,12 @@
   .loginBtn--twitter:hover,
   .loginBtn--twitter:focus {
     background: #00B6F1;
+  }
+
+  .takenUserName{
+    border-color: #BB3F30
+  }
+
+  .okUserName{
+    border-color: chartreuse;
   }

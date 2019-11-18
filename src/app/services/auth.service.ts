@@ -54,6 +54,7 @@ export class AuthService {
       }
     })
     if(typeof credential != 'number'){
+      this.afs.collection("usernames").doc(username).set({});
       return  this.updateUserData(credential.user,username);
     }
     else{
@@ -85,7 +86,9 @@ export class AuthService {
     // provider.addScope('user_birthday');
     const credential = await this.afAuth.auth.signInWithPopup(provider);
     if(credential.additionalUserInfo.isNewUser == false){
-      return this.getUserData(credential.user);
+      this.signOut();
+      return -1;
+      // return this.getUserData(credential.user);
     }
     else{
       this.afs.collection("usernames").doc(username).set({});
@@ -97,7 +100,10 @@ export class AuthService {
     const provider = new auth.GoogleAuthProvider();
     const credential = await this.afAuth.auth.signInWithPopup(provider);
     if(credential.additionalUserInfo.isNewUser == false){
-      return this.getUserData(credential.user);
+      console.log("ALREADY REGISTERED")
+      this.signOut();
+      return -1;
+      // return this.getUserData(credential.user);
     }
     else{
       this.afs.collection("usernames").doc(username).set({});
@@ -114,7 +120,9 @@ export class AuthService {
     const provider = new auth.TwitterAuthProvider();
     const credential = await this.afAuth.auth.signInWithPopup(provider);
     if(credential.additionalUserInfo.isNewUser == false){
-      return this.getUserData(credential.user);
+      this.signOut();
+      return -1;
+      // return this.getUserData(credential.user);
     }
     else{
       this.afs.collection("usernames").doc(username).set({});

@@ -1,6 +1,5 @@
 import { Component, OnInit,Output,EventEmitter } from '@angular/core';
 import {AuthService} from '../services/auth.service'
-
 import * as firebase from 'firebase/app';
 
 import {
@@ -25,9 +24,13 @@ export class RegistrationComponent implements OnInit {
   @Output() notify: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   ngOnInit() {
-    
+
   }
   
+  userNameFlag = false;
+  userNameInfo = "";
+  emailInUseFlag = false;
+
   async submitEmailPass(){    
     var email = (<HTMLInputElement>document.getElementById("email")).value;
     var password = (<HTMLInputElement>document.getElementById("password")).value;
@@ -50,6 +53,7 @@ export class RegistrationComponent implements OnInit {
           }
           else if(createResult ==1){
             console.log("Account created");
+            this.notify.emit(false);
           }
         }
       } 
@@ -74,7 +78,14 @@ export class RegistrationComponent implements OnInit {
       let result = await this.checkUsername(Username); 
       if(result == 1){
         var user = await this.auth.googleRegister(Username);
-        this.notify.emit(false);
+        if(user == -1){
+          console.log("TRY again");
+          this.emailInUseFlag = true;
+        }
+        else{
+          this.emailInUseFlag = false;
+          this.notify.emit(false);
+        }
       }
     }
   }
@@ -85,8 +96,15 @@ export class RegistrationComponent implements OnInit {
     if(Username.length >= 1){
       let result = await this.checkUsername(Username); 
       if(result == 1){
-        var user = this.auth.facebookRegister(Username);
-        this.notify.emit(false);
+        var user = await this.auth.facebookRegister(Username);
+        if(user == -1){
+          console.log("TRY again");
+          this.emailInUseFlag = true;
+        }
+        else{
+          this.emailInUseFlag = false;
+          this.notify.emit(false);
+        }
       }
     }
     
@@ -98,12 +116,33 @@ export class RegistrationComponent implements OnInit {
     if(Username.length >= 1){
       let result = await this.checkUsername(Username); 
       if(result == 1){  
-        var user = this.auth.twitterRegister(Username);
-        this.notify.emit(false);
+        var user = await this.auth.twitterRegister(Username);
+        if(user == -1){
+          console.log("TRY again");
+          this.emailInUseFlag = true;
+        }
+        else{
+          this.emailInUseFlag = false;
+          this.notify.emit(false);
+        }
       }
       
     }
     
+  }
+
+  async checkUsernameButton(){
+    console.log("CEGE")
+    var Username = (<HTMLInputElement>document.getElementById("Username")).value;
+    if(Username.length >= 1){
+      let result = await this.checkUsername(Username); 
+    }
+    else{
+      this.userNameFlag = true;
+      this.userNameInfo= "Username must be at least 1 character";
+      document.getElementById("Username").classList.remove("okUserName");
+      document.getElementById("Username").classList.add("takenUserName");
+    }
   }
 
   async checkUsername(desiredName:string){
@@ -111,20 +150,30 @@ export class RegistrationComponent implements OnInit {
     const firestore = firebase.firestore();
     const snapshot = await firestore
 
-    .collection("usersNames")
+    .collection("usernames")
     .where(firebase.firestore.FieldPath.documentId(), "==", desiredName)
     .get()
       snapshot.forEach(function(doc) {
         count++;
       });
-    
-
+      
 
     if(count ==0){
-      console.log("NO MTACHES")
+      document.getElementById("Username").classList.remove("takenUserName");
+      document.getElementById("Username").classList.add("okUserName");
+      this.userNameFlag = false;
+      // this.userNameInfo = true;
+      // console.log("NO MTACHES")
       return 1;
     }
     else{
+      this.userNameFlag = true;
+      this.userNameInfo = "Username is already taken";
+      document.getElementById("Username").classList.remove("okUserName");
+      document.getElementById("Username").classList.add("takenUserName");
+      
+      // console.log("already taken")
+      // this.userNameInfo = false;
       return 0;
     }
 
